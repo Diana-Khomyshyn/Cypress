@@ -6,3 +6,4 @@
     "ui-regression": "cypress run --spec cypress/e2e/1-getting-started/todo.cy.js"
   }
 }
+
