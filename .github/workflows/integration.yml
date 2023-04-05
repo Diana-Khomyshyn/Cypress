@@ -11,7 +11,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          command: npm run ui-regreshion
+          command: npm run ui-regression
           browser: chrome
 
       - name: Uploading artifact
