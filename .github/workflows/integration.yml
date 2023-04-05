@@ -14,6 +14,13 @@ jobs:
           command: npm run ui-regression
           browser: chrome
 
+      - name: Upload screenshots
+        uses: actions/upload-artifact@latest
+        if: failure()
+        with:
+            name: cypress-snapshots
+            path: cypress/snapshots
+      
       - name: Copy test execution videos
         run: |
           mkdir public
@@ -32,4 +39,3 @@ jobs:
           publish_dir: ./public
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          
