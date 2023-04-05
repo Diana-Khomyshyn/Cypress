@@ -15,23 +15,28 @@ jobs:
           browser: chrome
       
       - name: Copy execution test screenshots
+        if: always()
         run: |
           mkdir public
           cp -r cypress/screenshots public/screenshots
-          
+
       - name: Copy test execution videos
+        if: always()
         run: |
           mkdir public
           cp -r cypress/videos public/videos
 
       - name: Merge test results into one
+        if: always()
         run: npm run report:merge
 
       - name: Generate HTML report
+        if: always()
         run: npm run report:generate
 
       - name: Deploy report page
         uses: peaceiris/actions-gh-pages@v3
+        if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
