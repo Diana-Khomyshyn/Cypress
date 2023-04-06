@@ -14,10 +14,11 @@ jobs:
           command: npm run ui-regression
           browser: chrome
       
-      - name: Copy execution test screenshots
+      - name: Copy test execution videos
+        if: always()
         run: |
           mkdir public
-          cp -r cypress/screenshots public/screenshots
+          cp -r cypress/videos public/videos
 
       - name: Merge test results into one
         if: always()
