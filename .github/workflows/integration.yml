@@ -20,6 +20,16 @@ jobs:
           mkdir public
           cp -r cypress/videos public/videos
 
+      - name: Run Screenshot Comment Action
+        uses: saadmk11/comment-webpage-screenshot@main
+        if: always()
+        with:
+          upload_to: imgur
+          # Capture Screenshots of Changed HTML Files
+          capture_changed_html_files: yes
+          # Comma seperated paths to any other HTML File
+          capture_html_file_paths: "/pages/index.html, about.html"
+
       - name: Merge test results into one
         if: always()
         run: npm run report:merge

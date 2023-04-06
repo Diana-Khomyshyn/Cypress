@@ -2,6 +2,7 @@
     "reporterEnabled": "mochawesome",
     "mochawesomeReporterOptions": {
         "reportDir": "cypress/results/json",
+        "inlineAssets": true,
         "quiet": true,
         "charts": true,
         "embeddedScreenshots": true,
