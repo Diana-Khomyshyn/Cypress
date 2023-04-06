@@ -26,7 +26,7 @@ jobs:
           name: cypress-videos
           path: cypress/videos
 
-      - name: name: Uploading artifacts
+      - name: Uploading artifacts
         uses: actions/upload-artifact@v3
         if: always()
         with:
