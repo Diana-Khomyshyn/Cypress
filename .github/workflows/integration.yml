@@ -29,6 +29,7 @@ jobs:
           path: cypress/videos
 
       - name: Move all reports into one directory
+        if: always()
         run: |
           mkdir -p mochawesome-report
           i=0
@@ -40,6 +41,7 @@ jobs:
           done
         
       - name: Merge and generate reports
+        if: always()
         run: |
           mkdir report
           npx mochawesome-merge > report/report.json
