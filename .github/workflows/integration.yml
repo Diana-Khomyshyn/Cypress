@@ -15,7 +15,6 @@ jobs:
           browser: chrome
       
       - name: Copy execution test screenshots
-        if: always()
         run: |
           mkdir public
           cp -r cypress/screenshots public/screenshots
