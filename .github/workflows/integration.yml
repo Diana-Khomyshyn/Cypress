@@ -28,11 +28,11 @@ jobs:
           name: cypress-videos
           path: cypress/videos
 
-      - name: Copy execution test screenshots
+      - name: Copy test execution videos
         if: always()
         run: |
           mkdir public
-          cp -r cypress/screenshots public/screenshots
+          cp -r cypress/videos public/videos
 
       - name: Merge test results into one
         if: always()
