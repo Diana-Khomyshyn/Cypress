@@ -5,6 +5,7 @@ jobs:
   Cypress-Test:
     runs-on: ubuntu-latest
     steps:
+    if: always()
       - name: Checkout
         uses: actions/checkout@v3
 
