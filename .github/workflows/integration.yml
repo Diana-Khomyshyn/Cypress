@@ -28,17 +28,26 @@ jobs:
           name: cypress-videos
           path: cypress/videos
 
-      - name: Merge test results into one
-        if: always()
-        run: npm run report:merge
+      - name: Move all reports into one directory
+        run: |
+          mkdir -p mochawesome-report
+          i=0
+          for file in $(find reports -type f -name mochawesome\*.json); do
+            filename=$(basename "$file" .json)-"$i".json
+            mv "$file" mochawesome-report/"$filename"
+            ls mochawesome-report
+            i=$((i + 1))
+          done
         
-      - name: Generate HTML report
-        if: always()
-        run: npm run report:generate
+      - name: Merge and generate reports
+        run: |
+          mkdir report
+          npx mochawesome-merge > report/report.json
+          npx marge --inline report/report.json -o report/
 
       - name: Upload report
         uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-report
-          path: cypress/screenshots/
+          path: cypress/report/
