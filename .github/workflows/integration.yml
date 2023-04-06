@@ -8,9 +8,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Create reports directory
-        run: mkdir reports
-        
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
@@ -31,28 +28,25 @@ jobs:
           name: cypress-videos
           path: cypress/videos
 
-      - name: Move all reports into one directory
+      - name: Copy execution test screenshots
         if: always()
         run: |
-          mkdir -p mochawesome-report
-          i=0
-          for file in $(find reports -type f -name mochawesome\*.json); do
-            filename=$(basename "$file" .json)-"$i".json
-            mv "$file" mochawesome-report/"$filename"
-            ls mochawesome-report
-            i=$((i + 1))
-          done
-        
-      - name: Merge and generate reports
-        if: always()
-        run: |
-          mkdir report
-          npx mochawesome-merge > report/report.json
-          npx marge --inline report/report.json -o report/
+          mkdir public
+          cp -r cypress/screenshots public/screenshots
 
-      - name: Upload report
-        uses: actions/upload-artifact@v3
-        if: failure()
+      - name: Merge test results into one
+        if: always()
+        run: npm run report:merge
+
+      - name: Generate HTML report
+        if: always()
+        run: npm run report:generate
+
+      - name: Deploy report page
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
         with:
-          name: cypress-report
-          path: cypress/report/
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
