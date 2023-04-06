@@ -20,12 +20,6 @@ jobs:
           mkdir public
           cp -r cypress/screenshots public/screenshots
 
-      - name: Copy test execution videos
-        if: always()
-        run: |
-          mkdir public
-          cp -r cypress/videos public/videos
-
       - name: Merge test results into one
         if: always()
         run: npm run report:merge
